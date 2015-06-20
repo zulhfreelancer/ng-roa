@@ -1,4 +1,23 @@
-var app = angular.module('ionicApp', ['ionic']);
+var app = angular.module('ionicApp', ['ionic', 'ionic.utils']);
+
+// Local storage - http://learn.ionicframework.com/formulas/localstorage/
+angular.module('ionic.utils', [])
+.factory('$localstorage', ['$window', function($window) {
+  return {
+    set: function(key, value) {
+      $window.localStorage[key] = value;
+    },
+    get: function(key, defaultValue) {
+      return $window.localStorage[key] || defaultValue;
+    },
+    setObject: function(key, value) {
+      $window.localStorage[key] = JSON.stringify(value);
+    },
+    getObject: function(key) {
+      return JSON.parse($window.localStorage[key] || '{}');
+    }
+  }
+}]);
 
 app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
@@ -15,11 +34,12 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
   $urlRouterProvider.otherwise('/');
 });
 
-app.controller('HomeCtrl', function($scope) {
+app.controller('HomeCtrl', function($scope, $localstorage) {
 
   $scope.selected = false;
 
   $scope.getMenus = function(a){
+    
     
     var data = {
                    "foods":[
@@ -44,22 +64,37 @@ app.controller('HomeCtrl', function($scope) {
                    ]
                   };
 
-    if (a == "foods") {
-      var foodsIsSelected = 1;
-      $scope.data = data.foods;
-    } else {
-      var drinksIsSelected = 1;
-      $scope.data = data.drinks;
-    }
+    // Get save localstorage menu
+    function localStorageMenu(c){
+      var b = $localstorage.getObject('menu');
 
-    $scope.isActive = function(b) {
-      console.log(b);
-      if ((foodsIsSelected == 1) && (b == 'foods')) {
-        $scope.selected = true;
-      } else if ((drinksIsSelected == 1) && (b == 'drinks')) {
-        $scope.selected = true;
+      if (c == "foods") {
+        $scope.data = b.foods;
+        console.log( $scope.data );
+      } else {
+        $scope.data = b.drinks;
+        console.log( $scope.data );
       }
-    };
+    }
+   
+    if (localStorage.getItem('menu') !== null) {
+      console.log("Local storage exist. Do nothing");
+      // If user click on Foods tab inside the view, return foods data
+      if (a == "foods") {
+        localStorageMenu("foods");
+      } else {
+        // If user click on Drinks tab inside the view, return drinks data
+        localStorageMenu("drinks");
+      }
+    } else{
+      console.log("Local storage empty");
+      // If localstorage of menu is empty and not exist, push the remote data to browser local storage
+      var saveMenu1 = $localstorage.setObject('menu', data);
+      console.log("Now got something in it!");
+      // Populate the localstorage data into the view
+      localStorageMenu("foods");
+    }
+    
 
   }; // end scope getMenus
 
