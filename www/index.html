@@ -1,29 +1,109 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="ionicApp">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title></title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width"> 
+    <title>Ionic Modal</title>
+    <link rel="stylesheet" type="text/css" href="lib/ionic/css/ionic.min.css">
+    <script type="text/javascript" src="lib/ionic/js/ionic.bundle.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <style type="text/css">
+    input.menu-quantity {
+      max-width: 60px;
+      max-height: auto;
+      padding: 0 0 0 12px;
+      text-align: center;
+      display: inline;
+      border: 1px solid #e4e4e4;
+      position: absolute;
+      right: 20px;
 
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
-    <link href="css/ionic.app.css" rel="stylesheet">
-    -->
-
-    <!-- ionic/angularjs js -->
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
-
-    <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
-
-    <!-- your app's js -->
-    <script src="js/app.js"></script>
-    <script src="js/controllers.js"></script>
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      border-radius: 10px;
+    }
+    ion-item{
+      padding-bottom: 25px !important;
+    }
+    .list{
+      margin-top: 90px;
+    }
+    </style>
   </head>
+  <body ng-controller="HomeCtrl">
+    
+    <ion-side-menus>
+      <ion-side-menu-content>
+        <ion-nav-bar class="bar-positive nav-title-slide-ios7">
+          <ion-nav-back-button class="button-icon">
+            <span class="icon ion-ios-arrow-left"></span>
+          </ion-nav-back-button>
+        </ion-nav-bar>
+        <ion-nav-view></ion-nav-view>
+      </ion-side-menu-content>
 
-  <body ng-app="starter">
-    <ion-nav-view></ion-nav-view>
+      <ion-side-menu side="left">
+        <ion-content>
+          <ion-list>
+            <ion-item href="#"   menu-toggle="left">New Order</ion-item>
+            <ion-item href="#"    menu-toggle="left">Edit Order</ion-item>
+          </ion-list>
+        </ion-content>
+      </ion-side-menu>
+    </ion-side-menus>
+      
+    
+    <script id="menu.html" type="text/ng-template">
+      <ion-view title="Menus">
+
+          <ion-tabs class="tabs-striped tabs-top tabs-default">
+
+                <ion-tab title="Foods" ng-init="getMenus('foods')" ng-click="getMenus('foods')" ng-class="{active:false}" class="inactive">
+                    <ion-content >
+                        <ion-list class="list">
+                            <ion-item ng-repeat="food in data">
+                            {{food.name}} <input type="number" value="{{food.qty}}" class="menu-quantity"/>
+                            </ion-item>
+                        </ion-list>
+                    </ion-content>
+                </ion-tab>
+
+                <ion-tab title="Drinks" ng-click="getMenus('drinks')">
+                    <ion-content>
+                        <ion-list class="list">
+                            <ion-item ng-repeat="drink in data">
+                            {{drink.name}} <input type="number" value="{{drink.qty}}" class="menu-quantity"/>
+                            </ion-item>
+                        </ion-list>
+                    </ion-content>
+                </ion-tab>
+
+          </ion-tabs>
+
+      </ion-view>
+    </script>
+
+    <script id="table.html" type="text/ng-template">
+      <ion-view title="Table">
+      <ion-nav-buttons side="left">
+          <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+        </ion-nav-buttons>
+
+        <ion-content>
+          <p>Table number please?</p>
+          <a ng-href="#/menu.html">Go</a>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="success.html" type="text/ng-template">
+      <ion-view title="Success">
+
+        <ion-content>
+          <p>Success!</p>
+        </ion-content>
+      </ion-view>
+    </script>
+    
   </body>
 </html>
