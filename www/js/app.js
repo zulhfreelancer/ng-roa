@@ -64,10 +64,10 @@ app.controller('HomeCtrl', function($scope, $localstorage) {
                    ]
                   };
 
-    // Get save localstorage menu
+    // Get saved localstorage menu data, prepare and pass it to XXX function
     function localStorageMenu(c){
       var b = $localstorage.getObject('menu');
-
+      // If user requested foods data
       if (c == "foods") {
         $scope.data = b.foods;
         console.log( $scope.data );
@@ -76,9 +76,8 @@ app.controller('HomeCtrl', function($scope, $localstorage) {
         console.log( $scope.data );
       }
     }
-   
-    if (localStorage.getItem('menu') !== null) {
-      console.log("Local storage exist. Do nothing");
+
+    function whatIsUserRequesting(){
       // If user click on Foods tab inside the view, return foods data
       if (a == "foods") {
         localStorageMenu("foods");
@@ -86,6 +85,12 @@ app.controller('HomeCtrl', function($scope, $localstorage) {
         // If user click on Drinks tab inside the view, return drinks data
         localStorageMenu("drinks");
       }
+    }
+    
+    // If localstorage is not empty (menu is not empty)
+    if (localStorage.getItem('menu') !== null) {
+      console.log("Local storage exist. Do nothing");
+      whatIsUserRequesting();
     } else{
       console.log("Local storage empty");
       // If localstorage of menu is empty and not exist, push the remote data to browser local storage
