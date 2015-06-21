@@ -1,0 +1,27 @@
+<html>
+
+<head>
+    <title>ROA App</title>
+    <script src="js/angular.min.js"></script>
+    <script src="js/ngStorage.js"></script>
+    <script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+</head>
+
+<body ng-app="myApp">
+    <div class="app" ng-controller="successCtrl">
+        <h2>Success!</h2>
+        <p><b>Note: </b>This data is for debugging purpose only. Please refresh <i>kitchen_drinks.html</i> and <i>kitchen_foods.html</i> file now to see this example result.</p>
+        <b>Table number:</b>
+        <pre>{{ table_number }}</pre>
+        <b>Foods data:</b>
+        <pre>{{ localStorageFoods | json }}</pre>
+        <b>Drinks data:</b>
+        <pre>{{ localStorageDrinks | json }}</pre>
+        <a href="index.html">Submit new order &raquo;</a>
+    </div>
+    <!-- ~ .app -->
+    <script type="text/javascript" src="js/test_app.js"></script>
+</body>
+
+</html>
