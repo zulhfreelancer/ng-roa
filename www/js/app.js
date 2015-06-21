@@ -64,30 +64,7 @@ app.controller('HomeCtrl', function($scope, $localstorage) {
                    ]
                   };
 
-    // Get saved localstorage menu data, prepare and pass it to XXX function
-    function localStorageMenu(c){
-      var b = $localstorage.getObject('menu');
-      // If user requested foods data
-      if (c == "foods") {
-        $scope.data = b.foods;
-        console.log( $scope.data );
-      } else {
-        $scope.data = b.drinks;
-        console.log( $scope.data );
-      }
-    }
-
-    function whatIsUserRequesting(){
-      // If user click on Foods tab inside the view, return foods data
-      if (a == "foods") {
-        localStorageMenu("foods");
-      } else {
-        // If user click on Drinks tab inside the view, return drinks data
-        localStorageMenu("drinks");
-      }
-    }
-    
-    // If localstorage is not empty (menu is not empty)
+    // If menu in localstorage is not empty
     if (localStorage.getItem('menu') !== null) {
       console.log("Local storage exist. Do nothing");
       whatIsUserRequesting();
@@ -99,7 +76,31 @@ app.controller('HomeCtrl', function($scope, $localstorage) {
       // Populate the localstorage data into the view
       localStorageMenu("foods");
     }
-    
+
+    function whatIsUserRequesting(){
+      // If user click on Foods tab inside the view, return foods data
+      if (a == "foods") {
+        localStorageMenu("foods");
+        console.log("User clicked on foods tab");
+      } else if (a == "drinks") {
+        // If user click on Drinks tab inside the view, return drinks data
+        localStorageMenu("drinks");
+        console.log("User drinks on foods tab");
+      }
+    }
+
+    // Get saved localstorage menu data, prepare and pass it to XXX function
+    function localStorageMenu(c){
+      var b = $localstorage.getObject('menu');
+      // If user requested foods data
+      if (c == "foods") {
+        $scope.data = b.foods;
+        // console.log( $scope.data );
+      } else if (c == "drinks") {
+        $scope.data = b.drinks;
+        // console.log( $scope.data );
+      }
+    }
 
   }; // end scope getMenus
 
