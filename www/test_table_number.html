@@ -1,0 +1,55 @@
+<html>
+<head>
+	<title>ROA App</title>
+    <script src="js/angular.min.js"></script>
+    <script src="js/ngStorage.js"></script>
+    <script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="js/test_app.js"></script>
+
+    <style>
+    ul li{
+    	list-style-type: none;
+    }
+    </style>
+</head>
+
+<body ng-app="myApp">
+    <div class="app" ng-controller="tableCtrl">
+    	<div id="table_number">
+	    	<h2>Table number please?</h2>
+	    	
+	    	<input ng-model="table_number" type="number"/>
+	    	<br/><br/>
+	    	<a href="#" id="saveTableLink" ng-click="saveTableNum()">Next &raquo;</a><br/>
+    	</div>
+
+    	<div class="app" id="showMenu">
+    	<h2>Select menu</h2>
+    	<a href="#" id="food">Foods</a> | <a href="#" id="drink">Drinks</a>
+
+        <div id="foods">
+        	<label>Search food:</label><br/>
+        	<input type="text" ng-model="searchFood"/><br/>
+            <ul ng-repeat="food in localStorageFoods | filter:searchFood">
+                <li>{{food.name}}
+                    <input type="number" ng-model="food.qty" value="{{food.qty}}" />
+                </li>
+            </ul>
+        </div>
+        <div id="drinks">
+        	<label>Search food:</label><br/>
+        	<input type="text" ng-model="searchDrink"/><br/>
+            <ul ng-repeat="drink in localStorageDrinks | filter:searchDrink">
+                <li>{{drink.name}}
+                    <input type="number" ng-model="drink.qty" value="{{drink.qty}}" />
+                </li>
+            </ul>
+        </div>
+
+        <a href="test_success.html">Submit Order &raquo;</a>
+
+    	</div><!-- / showMenu-->
+    </div><!-- /tableCtrl -->
+</body>
+
+</html>
